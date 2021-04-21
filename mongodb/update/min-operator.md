@@ -1,4 +1,4 @@
-[`master`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/current-date-operator.md) / [`mongodb`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/current-date-operator.md) / [`$min`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/min-operator.md)
+<sup>[master](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/current-date-operator.md) / [mongodb](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/current-date-operator.md) / [update](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/min-operator.md) / [`$min`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/min-operator.md)</sup>
 
 ### MongoDB [`$min`](https://docs.mongodb.com/manual/reference/operator/update/min/#mongodb-update-up.-min) operator
 
