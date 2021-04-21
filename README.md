@@ -1,2 +1,5 @@
-# node-design-patterns
-Node design patterns studies
+### Node Design Patterns
+
+Collection of useful gists, articles and snippets about JavaScript and TypeScript
+
+
