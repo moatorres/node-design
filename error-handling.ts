@@ -1,3 +1,5 @@
+// from https://gist.github.com/pauloafpjunior
+
 // Value object
 class CityName {
 
