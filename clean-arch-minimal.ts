@@ -1,3 +1,5 @@
+// from https://gist.github.com/pauloafpjunior
+
 namespace Domain {
 
     export class Hero {
