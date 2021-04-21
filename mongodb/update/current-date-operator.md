@@ -1,3 +1,5 @@
+<sup>[node-design-patterns](https://github.com/moatorres/node-design-patterns/blob/master/) / [mongodb](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/) / [update](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/) / [`$currentDate`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/current-date-operator.md)</sup>
+
 ### MongoDB [`$currentDate`](https://docs.mongodb.com/manual/reference/operator/update/currentDate/#mongodb-update-up.-currentDate) operator
 
 The `$currentDate` operator sets the value of a field to the current date, either as a `Date` or a `timestamp`. The default type is `Date`.

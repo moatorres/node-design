@@ -1,3 +1,5 @@
+<sup>[node-design-patterns](https://github.com/moatorres/node-design-patterns/blob/master/) / [mongodb](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/) / [update](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/) / [`$inc`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/inc-operator.md)</sup>
+
 ### MongoDB [`$inc`](https://docs.mongodb.com/manual/reference/operator/update/inc/#mongodb-update-up.-inc) operator
 
 - The `$min` updates the value of the field to a specified value if the specified value is less than the current value of the field
