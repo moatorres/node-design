@@ -3,10 +3,10 @@
 ###### Fields
 
 | Name     | Description |
-| :------ | :---------- |
-| [`$currentDate`]('./current-date.md') | Sets the value of a field to current date, either as a Date or a Timestamp
-| [`$inc`]() | Increments the value of the field by the specified amount
-| [`$min`]() | Only updates the field if the specified value is less than the existing field value
+| :------- | :---------- |
+| [`$currentDate`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/current-date-operator.md) | Sets the value of a field to current date, either as a Date or a Timestamp
+| [`$inc`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/inc-operator.md) | Increments the value of the field by the specified amount
+| [`$min`](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/min-operator.md) | Only updates the field if the specified value is less than the existing field value
 | [`$max`]() | Only updates the field if the specified value is greater than the existing field value
 | [`$mul`]() | Multiplies the value of the field by the specified amount
 | [`$rename`]() | Renames a field
@@ -17,7 +17,7 @@
 ###### Array
 
 | Name     | Description |
-| :------ | :---------- |
+| :------- | :---------- |
 | [`$`]() | Acts as a placeholder to update the first element that matches the query condition
 | [`$[]`]() | Acts as a placeholder to update all elements in an array for the documents that match the query condition.
 | [`$[<identifier>]`]() | Acts as a placeholder to update all elements that match the *arrayFilters* condition for the documents that match the query condition
@@ -30,7 +30,7 @@
 ###### Modifiers
 
 | Name     | Description |
-| :------ | :---------- |
+| :------- | :---------- |
 | [`$each`]() | Modifies the `$push` and `$addToSet` operators to append multiple items for array updates
 | [`$position`]() | Modifies the `$push` operator to specify the position in the array to add elements
 | [`$slice`]() | Modifies the `$push` operator to limit the size of updated arrays
@@ -39,6 +39,6 @@
 ###### Bitwise
 
 | Name     | Description |
-| :------ | :---------- |
+| :------- | :---------- |
 | [`$bit`]() | Performs bitwise AND, OR, and XOR updates of integer values
 

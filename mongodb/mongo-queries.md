@@ -148,7 +148,7 @@ db.pessoas.updateMany(
 )
 ```
 
-[Click here to check other update operators with examples]()
+[Click here](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/operators.md) to check other update operators with examples
 
 #### Method `getIndexes` on collection `pessoas`
 
