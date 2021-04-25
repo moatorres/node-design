@@ -3,11 +3,11 @@
 In essence, a monad is simply a wrapper around a value. We can create that with an object that holds a single property:
 
 ```js
-var Maybe = function (val) {
+const Maybe = function (val) {
   this.__value = val
 }
 
-var maybeOne = new Maybe(1)
+const maybeOne = new Maybe(1)
 ```
 
 Typing that new keyword everywhere is a pain though (and has other problems). It would be nice to have a shortcut like `Promise.resolve()`. So we **create a class method** `of()`:
@@ -17,7 +17,7 @@ Maybe.of = function (val) {
   return new Maybe(val)
 }
 
-var maybeOne = Maybe.of(1)
+const maybeOne = Maybe.of(1)
 ```
 
 Because the point of our `Maybe` monad is to protect us from empty values (like `null` and `undefined`), we’ll **write a helper method** to test the value in our `Maybe`:
@@ -28,7 +28,7 @@ Maybe.prototype.isNothing = function () {
 }
 ```
 
-Now we write a method that will let us get the value and do something with it. But we’ll also put a **guard** on it, to protect us from those pesky `null` and `undefined` values. We’ll call the method `map`, since it maps from one value to another.
+Now we write a method that will let us get the value and do something with it. But we’ll also put a **guard** on it, to protect us from those pesky `null` and `undefined` values. We’ll call the method **`map`**, since it maps from one value to another.
 
 ```js
 Maybe.prototype.map = function (f) {
@@ -55,10 +55,10 @@ If any of those prop calls returns `undefined` then `Maybe` just skips over it. 
 
 This looks a lot like our `Promise` pattern. We have something that creates the monad, `Maybe.of()`, rather like `Promise.resolve()`. And then we have a chain of `.map()` methods that do something with the value, rather like `.then()`. A `Promise` lets us write code without worrying about whether data is asynchronous or not. The `Maybe` monad lets us write code without worrying whether data is empty or not.
 
-Now, what if we got excited about this whole `Maybe` thing, and decided to write a function to grab the banner URL? We could return a `Maybe` for that function too:
+Now, what if we got excited about this whole `Maybe` thing, and decided to write a _function to grab the banner URL_? We could return a `Maybe` for that function too:
 
 ```js
-var getProvinceBanner = function (province) {
+const getProvinceBanner = function (province) {
   return Maybe.of(banners[province])
 }
 ```
@@ -159,16 +159,18 @@ Now, if our visiting user happens to come from Nunavut, we can at least show som
 
 ```js
 // Provide a default banner with .orElse()
-var bannerSrc = getUserBanner(user).orElse('/assets/banners/default-banner.jpg')
+const bannerSrc = getUserBanner(user).orElse(
+  '/assets/banners/default-banner.jpg'
+)
 
 // Grab the banner element and wrap it in a Maybe too.
-var bannerEl = Maybe.of(document.querySelector('.banner > img'))
+const bannerEl = Maybe.of(document.querySelector('.banner > img'))
 ```
 
 Now we have two `Maybes`: `bannerSrc` and `bannerEl`. We want to use them both together to set the banner image (our original problem). Specifically, we want to set the src attribute of the DOM element in `bannerEl` to be the string inside `bannerSrc`. What if we wrote a function that expected two `Maybes` as inputs?
 
 ```js
-var applyBanner = function (mBanner, mEl) {
+const applyBanner = function (mBanner, mEl) {
   mEl.__value.src = mBanner.__value
   return mEl
 }
@@ -181,9 +183,9 @@ This would work just fine, until one of our values was `null`. Because we’re p
 Let’s rewrite our `applyBanner()` as if we were just working with regular values:
 
 ```js
-var curry = require('ramda').curry
+const curry = require('ramda').curry
 
-var applyBanner = curry(function (el, banner) {
+const applyBanner = curry(function (el, banner) {
   el.src = banner
   return el
 })
@@ -195,7 +197,7 @@ Note that we’ve curried the function. Now, what happens if we run `.map()` wit
 bannerEl.map(applyBanner) // => Maybe([function])
 ```
 
-We get a function wrapped in a `Maybe`. Now, stay with me. This isn’t as crazy as it might seem. The basic building block of functional programming is first-class functions. And all that means is that we can pass functions around just like any other variable. So why not stick one inside a `Maybe`? All we need then is a version of `.map()` that works with a Maybe-wrapped function. In other words, a method that applies the wrapped function to our `Maybe` with a value. We’ll call it `.ap` for short:
+We get a function wrapped in a `Maybe`. Now, stay with me. This isn’t as crazy as it might seem. The basic building block of functional programming is first-class functions. And all that means is that we can pass functions around just like any other constiable. So why not stick one inside a `Maybe`? All we need then is a version of `.map()` that works with a Maybe-wrapped function. In other words, a method that applies the wrapped function to our `Maybe` with a value. We’ll call it `.ap` for short:
 
 ```js
 Maybe.prototype.ap = function (someOtherMaybe) {
@@ -206,17 +208,17 @@ Maybe.prototype.ap = function (someOtherMaybe) {
 Remember that in the context above, `this.__value` is a function. So we’re using map the same way we have been all along—it just applies a normal function to a `Maybe`. Putting it together we get:
 
 ```js
-var mutatedBanner = bannerEl.map(applyBanner).ap(bannerSrc)
+const mutatedBanner = bannerEl.map(applyBanner).ap(bannerSrc)
 ```
 
 This works, but isn’t super clear. To read this code we have to remember that `applyBanner` takes two parameters. Then also remember that it’s partially applied by `bannerEl.map()`. And then it’s applied to `bannerSrc`.
 
-It would be nicer if we could say “Computer, I’ve got this function that takes two regular variables. Transform it into one that works with `Maybe` monads.”
+It would be nicer if we could say “Computer, I’ve got this function that takes two regular constiables. Transform it into one that works with `Maybe` monads.”
 
 We can do just that with a function called `liftA2` (‘2’ because we have two parameters):
 
 ```js
-var liftA2 = curry(function (fn, m1, m2) {
+const liftA2 = curry(function (fn, m1, m2) {
   return m1.map(fn).ap(m2)
 })
 ```
@@ -224,8 +226,8 @@ var liftA2 = curry(function (fn, m1, m2) {
 Note that we assume `fn` is curried. We now have a neat function that can take another function and make it work with our `Maybes`:
 
 ```js
-var applyBannerMaybe = liftA2(applyBanner)
-var mutatedBanner = applyBannerMaybe(bannerEl, bannerSrc)
+const applyBannerMaybe = liftA2(applyBanner)
+const mutatedBanner = applyBannerMaybe(bannerEl, bannerSrc)
 ```
 
 Mission accomplished. We’re now able to pluck the `province` value from deep within the user preference object. We can use that to look up a banner value, and then apply it to the DOM, safely, without a single if-statement.
@@ -240,23 +242,23 @@ That is a valid objection. But we’ve been writing functional JavaScript all al
 
 ```js
 // map :: Monad m => (a -> b) -> m a -> m b
-var map = curry(function (fn, m) {
+const map = curry(function (fn, m) {
   return m.map(fn)
 })
 
 // chain :: Monad m => (a -> m b) -> m a -> m b
-var chain = curry(function (fn, m) {
+const chain = curry(function (fn, m) {
   return m.chain(fn)
 })
 
 // ap :: Monad m => m (a -> b) -> m a -> m b
-var ap = curry(function (mf, m) {
+const ap = curry(function (mf, m) {
   // mf, not fn, because this is a wrapped function
   return mf.ap(m)
 })
 
 // orElse :: Monad m => m a -> a -> m a
-var orElse = curry(function (val, m) {
+const orElse = curry(function (val, m) {
   return m.orElse(val)
 })
 ```
@@ -264,15 +266,15 @@ var orElse = curry(function (val, m) {
 With that done, we can write the whole thing in a more **pointfree style**:
 
 ```js
-var pipe = require('ramda').pipe
-var bannerEl = Maybe.of(document.querySelector('.banner > img'))
-var applyBanner = curry(function (el, banner) {
+const pipe = require('ramda').pipe
+const bannerEl = Maybe.of(document.querySelector('.banner > img'))
+const applyBanner = curry(function (el, banner) {
   el.src = banner
   return el
 })
 
 // customiseBanner :: Monad m => String -> m DOMElement
-var customiseBanner = pipe(
+const customiseBanner = pipe(
   Maybe.of,
   map(R.path(['accountDetails', 'address', 'province'])),
   liftA2(applyBanner, bannerEl)
@@ -302,25 +304,25 @@ With this done, I can now do things like this:
 
 ```js
 // set the innerHTML attribute on an element
-var setHTML = curry(function (el, htmlStr) {
+const setHTML = curry(function (el, htmlStr) {
   el.innerHTML = htmlStr
   return el
 })
 
 // get an element
-var getEl = compose(Promise.of, document.querySelector)
+const getEl = compose(Promise.of, document.querySelector)
 
 // fetch an update from a server somewhere
-var fetchUpdate = compose(Promise.of, $.getJSON)
+const fetchUpdate = compose(Promise.of, $.getJSON)
 
 // process update
-var processUpdate = pipe(
+const processUpdate = pipe(
   map(R.path(['notification', 'message'])),
   liftA2(setHTML, getEl('.notifications'))
 )
 
-//
-var updatePromise = fetchUpdate('/path/to/update/api')
+// wrap in a promise
+const updatePromise = fetchUpdate('/path/to/update/api')
 
 processUpdate(updatePromise)
 ```
@@ -337,4 +339,4 @@ If we use monad libraries that conform to a specification, we can compose pipeli
 
 ### Credits
 
-From the article [THE MARVELLOUSLY MYSTERIOUS JAVASCRIPT MAYBE MONAD](https://jrsinclair.com/articles/2016/marvellously-mysterious-javascript-maybe-monad/) written by [@jrsinclair](https://github.com/jrsinclair)
+From the article [The Marvellously Mysterious JavaScript Maybe Monad](https://jrsinclair.com/articles/2016/marvellously-mysterious-javascript-maybe-monad/) written by [@jrsinclair](https://github.com/jrsinclair)

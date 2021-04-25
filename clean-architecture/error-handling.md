@@ -1,6 +1,10 @@
-### Error Handling clean architecture implementation in TypeScript
+# Clean Architecture
 
-#### Value object
+## Error Handling
+
+### Value object
+
+This class implements the concept of `value object`
 
 ```ts
 class CityName {
@@ -31,6 +35,8 @@ class CityName {
 
 #### Validation error
 
+Custom error implementation
+
 ```ts
 class InvalidNameError extends Error {
   constructor(name: string) {
@@ -40,6 +46,8 @@ class InvalidNameError extends Error {
 ```
 
 #### Usage
+
+Handling errors with the function
 
 ```ts
 // input

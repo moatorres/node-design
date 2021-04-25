@@ -51,7 +51,6 @@ db.pessoas.inserMany(pessoas)
 
 #### Method `find` on collection `pessoas`
 
-
 ```js
 // the method below
 db.pessoas.find()
@@ -96,6 +95,22 @@ db.pessoas.find({
 })
 ```
 
+#### Sorting results with `.sort`
+
+```js
+// ordenar por ordem decrescente (do mais pesado para o mais leve)
+db.pessoas.find().sort({ peso: -1 })
+
+// ordenar por nome (crescente) e peso (decrescente)
+db.pessoas.find().sort({ nome: 1, peso: -1 })
+```
+
+#### Pagination with `.limit` and `.skip`
+
+```js
+db.unicorns.find().sort({ peso: -1 }).limit(2).skip(1)
+```
+
 #### Method `update` on collection `pessoas`
 
 ```js
@@ -109,6 +124,7 @@ db.pessoas.update({ nome: 'Antonio' }, { $set: { peso: 85 } })
 ```
 
 #### Method `update` with `$inc` operator
+
 <sub>`$inc` comes from **increments**</sub>
 
 ```js
@@ -116,6 +132,7 @@ db.pessoas.update({ nome: 'Bia' }, { $inc: { peso: -2 } })
 ```
 
 #### Method `update` with `$push` operator
+
 <sub>`$push` applies only to **arrays**</sub>
 
 ```js
@@ -123,17 +140,15 @@ db.pessoas.update({ nome: 'Ana' }, { $push: { tags: 'açúcar' } })
 ```
 
 #### Method `update` with `upsert` option
+
 <sub>When `upsert` is passed the document will be added if it doesn't exists</sub>
 
 ```js
-db.pessoas.update(
-  { nome: 'Tita' },
-  { $inc: { peso: 10 } },
-  { upsert: true }
-)
+db.pessoas.update({ nome: 'Tita' }, { $inc: { peso: 10 } }, { upsert: true })
 ```
 
 #### Method `updateMany` on collection `pessoas`
+
 <sub>You can use filters as with the method `find()` to match certain documents</sub>
 
 ```js
@@ -152,37 +167,6 @@ db.pessoas.updateMany(
 
 [Click here](https://github.com/moatorres/node-design-patterns/blob/master/mongodb/update/operators.md) to check other update operators with examples
 
-#### Method `getIndexes` on collection `pessoas`
+#### Stats
 
-```js
-const getIndexesPessoas = () => db.pessoas.getIndexes()
-const getIndexesResponse = db.pessoas.getIndexes()
-
-const indexes = getIndexesPessoas()
-
-let returnedArray = [
-  {
-    v: 2,
-    key: {
-      _id: 1,
-    },
-    name: '_id_',
-  },
-  {
-    v: 2,
-    key: {
-      psicologa: 1,
-    },
-    name: 'PsicologaIndex',
-    background: true,
-  },
-  {
-    v: 2,
-    key: {
-      paciente: 1,
-    },
-    name: 'PacienteIndex',
-    background: true,
-  },
-]
-```
+You can obtain statistics on a database by typing **`db.stats()`**. Most of the information deals with the size of your database. You can also get statistics on a collection, say `pessoas`, by typing **`db.pessoas.stats()`**. Most of this information relates to the size of your collection and its indexes.
