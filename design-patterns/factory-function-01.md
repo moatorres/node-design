@@ -1,10 +1,10 @@
-# Functional Programming
+# Design Patterns
 
-## Factory Pattern
+## Factory Function
 
-A Factory Function is **a function which returns an object**. This pattern does not require the `new` keyword to initialize `object` like in `constructor`. This pattern is a great way of using functional programming in JavaScript as they are simply functions.
+**Factory Functions** are _functions return new objects_. Factory functions do not require the `new` keyword to initialize an object because they are plain JavaScript functions.
 
-Private properties and methods can be defined in a factory by excluding them from returned object. They can still be accessed since a closure is formed.
+Private properties and methods can be defined in a factory by excluding them from the returned object. Private properties can still be accessed since a closure is formed.
 
 ```js
 const Pessoa = (nome) => {

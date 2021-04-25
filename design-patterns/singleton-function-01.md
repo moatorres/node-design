@@ -1,8 +1,8 @@
-# Functional Programming
+# Design Patterns
 
-## Singleton Pattern
+## Singleton Function
 
-The Singleton pattern is a design pattern that restricts the instantiation of a class to one object. After the first object is created, it will return the reference to the same one whenever called for an object.
+The **Singleton Pattern** is a design pattern that **restricts the instantiation of a class to one object**. After the first object is created, it will return the reference to the same one whenever called for an object.
 
 ```js
 const Singleton = (function () {

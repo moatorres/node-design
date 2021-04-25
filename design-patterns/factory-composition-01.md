@@ -2,7 +2,7 @@
 
 ## Factory Composition Pattern
 
-This pattern is used to assign behaviors to objects, as opposed to inheriting many often unneeded behaviors.
+This pattern is used to assign **behaviors** to objects, as opposed to inheriting often unneeded behaviors.
 
 **Behaviour factories**
 
