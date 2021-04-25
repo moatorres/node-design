@@ -1,10 +1,11 @@
+<sup>[node-design-patterns](https://github.com/moatorres/node-design-patterns/blob/master/) / [clean-architecture](https://github.com/moatorres/node-design-patterns/blob/master/clean-architecture/) / [clean-arch-minimal](https://github.com/moatorres/node-design-patterns/blob/master/clean-architecture/clean-arch-minimal.md)</sup>
+
 ### Minimal clean architecture implementation in TypeScript
 
 #### `Domain` namespace
 
 ```ts
 namespace Domain {
-
   export class Hero {
     private constructor(private _name: string) {}
     get name(): string {
@@ -66,7 +67,6 @@ namespace Domain {
 
 ```ts
 namespace Data {
-
   type HeroDTO = {
     name: string
   }
@@ -129,7 +129,6 @@ namespace Data {
 
 ```ts
 namespace View {
-
   export type HeroViewModel = {
     name: string
   }
