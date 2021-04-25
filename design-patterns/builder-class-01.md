@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Builder Pattern with `classes`
+## Builder Class
 
 In this example, we are going to use the **Builder Pattern** to create `Customer` objects that have 4 fields: `name`, `age`, `location`, `languages`.
 

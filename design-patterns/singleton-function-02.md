@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Singleton Pattern
+## Singleton Function
 
 Let's create a `Bank` object that has 3 methods:
 

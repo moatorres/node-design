@@ -1,10 +1,10 @@
-# Funcional Programming
+# Design Patterns
 
-## Module Pattern
+## Module Function
 
 The **Module Pattern** is a creational and structural design pattern which provides a way of encapsulating private members while producing a public API.
 
-Quando a função é uma `IIFE` (immediately invoked function expression), o **return value** vira a API pública.
+`IIFE:` **I**mmediately **I**nvoked **F**unction **E**xpression
 
 ```js
 const Module = (function (num) {

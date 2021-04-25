@@ -1,8 +1,8 @@
-# Object-orientend Programming
+# Design Patterns
 
-## Template Pattern
+## Template Class
 
-##### In the example below, the `Pokemon` class will be our template class
+In the example below, the `Pokemon` class will be our template class
 
 ```js
 class Pokemon {
@@ -12,31 +12,34 @@ class Pokemon {
     this.attack = _pokemon.attack || 1
     this.defense = _pokemon.defense || 1
   }
+
   toString() {
     return `${this.name} -  power: ${this.power}; attack: ${this.attack}; defense: ${this.defense}`
   }
+
   calculateMultiplier() {
-    //Step 1 - Common
+    // Step 1 - Common
     return (1 / 2) * this.power * Math.random()
   }
+
   showDamage(damage) {
     // Step 3 - Common
     console.log('Pokemon damage is:', damage)
   }
+
   calculateDamage() {
-    const multipliers = this.calculateMultiplier() //Step 1;
-    const damage = this.calculateImpact(multipliers) //Step 2;
-    this.showDamage(damage) //Step 3;
+    const multipliers = this.calculateMultiplier() // Step 1
+    const damage = this.calculateImpact(multipliers) // Step 2
+    this.showDamage(damage) // Step 3
   }
 }
 ```
 
 Let's write classes that implement our `Pokemon` template
 
-- **`FightingPokemon`**
+### **`FightingPokemon`**
 
 ```js
-// implementation
 class FightingPokemon extends Pokemon {
   constructor(_pokemon) {
     super(_pokemon)
@@ -45,8 +48,11 @@ class FightingPokemon extends Pokemon {
     return Math.floor((this.attack / this.defense) * multipliers) + 1
   }
 }
+```
 
-// usage
+#### Usage
+
+```js
 const passimian = new FightingPokemon({
   name: 'Passimian',
   attack: 10,
@@ -54,15 +60,13 @@ const passimian = new FightingPokemon({
   defense: 10,
 })
 
-// output
 passimian.calculateDamage()
 console.log(passimian.toString())
 ```
 
-- **`PoisonPokemon`**
+### **`PoisonPokemon`**
 
 ```js
-// implementation
 class PoisonPokemon extends Pokemon {
   constructor(_pokemon) {
     super(_pokemon)
@@ -71,8 +75,11 @@ class PoisonPokemon extends Pokemon {
     return Math.floor((this.attack - this.defense) * multipliers) + 1
   }
 }
+```
 
-// usage
+#### Usage
+
+```js
 const poipole = new PoisonPokemon({
   name: 'Poipole',
   attack: 10,
@@ -80,15 +87,14 @@ const poipole = new PoisonPokemon({
   defense: 10,
 })
 
-// output
 console.log(poipole.toString())
+
 poipole.calculateDamage()
 ```
 
-- **`GroundPokemon`**
+### **`GroundPokemon`**
 
 ```js
-// implementation
 class GroundPokemon extends Pokemon {
   constructor(_pokemon) {
     super(_pokemon)
@@ -97,8 +103,11 @@ class GroundPokemon extends Pokemon {
     return Math.floor((this.attack + this.defense) * multipliers) + 1
   }
 }
+```
 
-// usage
+#### Usage
+
+```js
 const mudsdale = new GroundPokemon({
   name: 'Mudsdale',
   attack: 10,
@@ -106,8 +115,8 @@ const mudsdale = new GroundPokemon({
   defense: 10,
 })
 
-// output
 console.log(mudsdale.toString())
+
 mudsdale.calculateDamage()
 ```
 

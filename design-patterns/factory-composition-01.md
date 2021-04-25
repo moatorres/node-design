@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Factory Composition Pattern
+## Factory Composition
 
 This pattern is used to assign **behaviors** to objects, as opposed to inheriting often unneeded behaviors.
 

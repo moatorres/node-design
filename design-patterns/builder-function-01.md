@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Builder Pattern
+## Builder Function
 
 When we want to create complicated object which has multiple parts, we can use a **Builder Pattern** that separates the building of these parts. This creational process does not care about how these parts are assembled.
 

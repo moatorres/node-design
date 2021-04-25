@@ -1,6 +1,6 @@
 # Design Patterns
 
-## Simple Factory
+## Factory Function
 
 To abstract the process of creating objects without relying on class constructors or the `new` keyword, we will create a **Simple Factory** function.
 

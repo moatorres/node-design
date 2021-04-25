@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Builder Pattern with `classes`
+## Builder Class
 
 ```js
 class Person {

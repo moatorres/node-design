@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Builder Pattern
+## Builder Function
 
 As a use-case for the **Builder Pattern**, imagine that you have to perform a lot of common HTTP requests to the same server with the same header and would like to simplify the API.
 

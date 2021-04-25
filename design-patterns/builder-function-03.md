@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Builder Pattern
+## Builder Function
 
 The **Builder pattern** is a design pattern to provide a flexible solution for creating objects. Builder pattern separates the construction of a complex object from its representation.
 
