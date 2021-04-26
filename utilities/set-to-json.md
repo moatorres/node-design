@@ -8,7 +8,7 @@ I tried all kinds of things to track down what was causing this: was an object m
 
 It was actually much simpler than this. The problem, was `JSON.stringify()` and a `Set` contained within the object being stringified.
 
-For an example, I'll create a user with some "lucky numbers", which I'm just making up as an example where the entries should be unique, so a `Set` would (in theory) be better than an `Array`.
+Let's create a `user` with some "lucky numbers", which we're just making up as an example _where the entries should be unique_, so a `Set` would (in theory) be better than an `Array`.
 
 ```js
 const userData = {
@@ -22,19 +22,19 @@ JSON.stringify(userData)
 // > "{\"name\":\"Haleema Greer\",\"id\":7252,\"luckyNumbers\":{}}"
 ```
 
-Apparently Set data just isn't in a format that can convert to JSON without some extra work.
+Apparently `Set` data just isn't in a format that can convert to JSON without some extra work.
 
 One good solution is presented on [Stack Overflow](https://stackoverflow.com/a/46491780/325674).
 
 ```js
-function Set_toJSON(key, value) {
+function stringifySet(key, value) {
   if (typeof value === 'object' && value instanceof Set) {
     return [...value]
   }
   return value
 }
 
-JSON.stringify(userData, Set_toJSON)
+JSON.stringify(userData, stringifySet)
 
 // > "{\"name\":\"Haleema Greer\",\"id\":7252,\"luckyNumbers\":[55,45,62,21]}"
 ```

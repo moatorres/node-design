@@ -2,23 +2,21 @@
 
 ## Map `toJSON`
 
-Would you like to start using ES6 `Map` instead of JS objects but you're holding back because you can't figure out how to `JSON.stringify()` a `Map`?
+How to `JSON.stringify()` a `Map` type in JavaScript?
 
-It's possible to add support for native `Map` object, including deeply nested values using this second argument.
+To add support for native `Map` objects, including deeply nested values, we must leverage `JSON.stringify` and `JSON.parse` methods' **second argument**.
 
-Luckily, both `JSON.stringify` and `JSON.parse` **support a second argument** that we can use just for that.
+Let's create two method:s
 
-We'll create two methods:
+1. `stringifyMap` to stringify a `Map`-type object
+2. `parseMap` to parse it
 
-1. `replacer` to stringify a `Map`-type object
-2. `reviver` to parse it
-
-#### `replacer`
+#### `stringifyMap`
 
 Used as a second argument to `JSON.stringify`
 
 ```js
-function replacer(key, value) {
+function stringifyMap(key, value) {
   if (!(value instanceof Map)) return value
 
   return {
@@ -28,16 +26,18 @@ function replacer(key, value) {
 }
 ```
 
-#### `reviver`
+#### `parseMap`
 
 Used as a second argument to `JSON.parse`
 
 ```js
-function reviver(key, value) {
-  if (typeof value !== 'object' || value === null || value.dataType !== 'Map')
-    return value
-
-  return new Map(value.value)
+function parseMap(key, value) {
+  if (typeof value === 'object' && value !== null) {
+    if (value.dataType === 'Map') {
+      return new Map(value.value);
+    }
+  }
+  return value;
 }
 ```
 
@@ -46,10 +46,13 @@ function reviver(key, value) {
 ```js
 const originalValue = new Map([['a', 1]])
 
-const str = JSON.stringify(originalValue, replacer)
-const newValue = JSON.parse(str, reviver)
+const str = JSON.stringify(originalValue, stringifyMap)
+const newValue = JSON.parse(str, parseMap)
 
-console.log(originalValue, newValue)
+console.log(originalValue.get('a'))
+console.log(newValue.get('a'))
+console.log(str)
+console.log(newValue)
 ```
 
 Deep nesting with combination of `Array`, `Object` and `Map`:
@@ -68,8 +71,8 @@ const originalValue = [
   ]),
 ]
 
-const str = JSON.stringify(originalValue, replacer)
-const newValue = JSON.parse(str, reviver)
+const str = JSON.stringify(originalValue, stringifyMap)
+const newValue = JSON.parse(str, parseMap)
 
 console.log(originalValue, newValue)
 ```
