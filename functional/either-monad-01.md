@@ -723,6 +723,7 @@ function csvToMessages(csvData) {
 ### Credits
 
 From the article [Elegant Error Handling with the JavaScript Either monad](https://blog.logrocket.com/elegant-error-handling-javascript-either-monad/) written by [@jrsinclair](https://github.com/jrsinclair)
+[Try on CodePen](https://codepen.io/jrsinclair/pen/GYbJaW?editors=0010)
 
 ##### Related articles
 
