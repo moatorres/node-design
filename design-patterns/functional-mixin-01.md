@@ -150,7 +150,7 @@ Rely mostly on **function composition to compose behavior and application struct
 
 ### Credits
 
-From the book [Composing Software]() written by [@ericelliott](https://github.com/ericelliott)
+From the book [Composing Software](https://www.amazon.com/Composing-Software-Exploration-Programming-Composition/dp/1661212565) written by [@ericelliott](https://github.com/ericelliott)
 
 ```
 

@@ -79,4 +79,4 @@ userName.get(bob) // => 'robert'
 
 ### Credits
 
-From the book [Functional Programming in JavaScript](<http://sd.blackball.lv/library/Functional_Programming_in_JavaScript_(2015).pdf>) written by [@dan-nix](https://github.com/dan-nix)
+From the book [Functional Programming in JavaScript](https://www.packtpub.com/product/functional-programming-in-javascript/9781784398224) written by [@dan-nix](https://github.com/dan-nix)
