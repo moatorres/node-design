@@ -1,6 +1,8 @@
-### `do-notation` generator
+# Functional Programming
 
-It's also nice to note that do-notation can easily be implemented with generators (as co.js and redux-saga do):
+## `do-notation` generator
+
+**do-notation** can easily be implemented with generators, as _co.js_ and _redux-saga_ do:
 
 ```js
 function Do(m, f) {
@@ -16,7 +18,7 @@ function Do(m, f) {
 }
 ```
 
-It can be used with any monad that implements `.of` and `.then` (being `.then == bind`), for example:
+It can be used with any monad that implements `.of` and `.then` - being `.then == bind`
 
 ```js
 function generateUserURL(userMaybe) {
@@ -28,7 +30,7 @@ function generateUserURL(userMaybe) {
 }
 ```
 
-Or
+Or:
 
 ```js
 // Promise.of = Promise.resolve;
@@ -42,7 +44,7 @@ Do(Promise, function*() {
 })
 ```
 
-It won't work with the list (Array) monad, though, because JS generators are stateful (Generator.prototype.next mutates the generator). That is, the following example can't be done in JS without special syntax or stateless (rewindable?) generators:
+It won't work with the list `Array` monad, though, because JS generators are stateful (`Generator.prototype.next` mutates the generator). That is, the following example can't be done in JS without special syntax or stateless (rewindable?) generators:
 
 ```js
 // Array.of = a => [a];
