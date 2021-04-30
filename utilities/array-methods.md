@@ -309,7 +309,7 @@ const arr = [].toString()
 // => ''
 ```
 
-### `unshift(...items: T[]): number` ✏️ <sup>ES3</sup>
+### `unshift(...items)` ✏️ <sup>ES3</sup>
 
 Inserts the `items` at the beginning of this array and returns the length of `this` after the modification.
 

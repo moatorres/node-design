@@ -158,7 +158,7 @@ words.forEach((word) => {
 })
 ```
 
-#### `dot` metacharacter
+#### `.` dot
 
 The `.` metacharacter stands for any single character in the text
 
@@ -185,7 +185,7 @@ words.forEach((word) => {
 })
 ```
 
-#### `question mark` metacharacter
+#### `?` question mark
 
 The `?` meta character is a quantifier that **matches the previous element zero or one time**
 
