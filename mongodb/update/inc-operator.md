@@ -11,17 +11,15 @@
 **Insert a document**
 
 ```js
-db.produtos.insertOne({ _id: 1, highScore: 800, lowScore: 200 }
-
-)
+db.produtos.insertOne({ _id: 1, highScore: 800, lowScore: 200 })
 ```
 
 **Perform the update**
 
 ```js
 db.products.update(
-   { sku: "abc123" },
-   { $inc: { quantidade: -2, "metricas.compras": 1 } }
+  { sku: 'abc123' },
+  { $inc: { quantidade: -2, 'metricas.compras': 1 } }
 )
 ```
 
@@ -33,12 +31,12 @@ let doc = db.produtos.find().pretty()
 console.log(doc)
 
 const doc = {
-   "_id" : 1,
-   "sku" : "abc123",
-   "quantidade" : 8,
-   "metricas" : {
-      "compras" : 3,
-      "avaliacao" : 3.5
-   }
+  _id: 1,
+  sku: 'abc123',
+  quantidade: 8,
+  metricas: {
+    compras: 3,
+    avaliacao: 3.5,
+  },
 }
 ```
