@@ -147,6 +147,120 @@ You can avoid that, though, using the following advice:
 
 Rely mostly on **function composition to compose behavior and application structure, and only rarely use functional mixins**. Never use class inheritance unless we're inheriting directly from a third-party base class such as React.Class. Never build our own inheritance hierarchies.
 
+### Implicit Dependencies
+
+You may be tempted to create functional mixins designed to work together. Imagine you want to build a configuration manager for your app that logs warnings when you try to access configuration properties that don’t exist.
+It’s possible to build it like this:
+
+```js
+// in its own module...
+const withLogging = (logger) => (o) =>
+  Object.assign({}, o, {
+    log(text) {
+      logger(text)
+    },
+  })
+
+// in a different module with no explicit mention of withLogging -- we just assume it's there
+const withConfig = (config) => (
+  o = {
+    log: (text = '') => console.log(text),
+  }
+) =>
+  Object.assign({}, o, {
+    get(key) {
+      return config[key] == undefined
+        ? // vvv implicit dependency here... oops! vvv
+          this.log(`Missing config key: ${key}`)
+        : // ^^^ implicit dependency here... oops! ^^^
+          config[key]
+    },
+  })
+
+// in yet another module that imports withLogging and withConfig
+const createConfig = ({ initialConfig, logger }) =>
+  pipe(withLogging(logger), withConfig(initialConfig))({})
+// elsewhere
+const initialConfig = {
+  host: 'localhost',
+}
+
+const logger = console.log.bind(console)
+const config = createConfig({ initialConfig, logger })
+console.log(config.get('host')) // => 'localhost'
+config.get('notThere') // => 'Missing config key: notThere'
+```
+
+However, it’s also possible to build it like this:
+
+```js
+// import withLogging() explicitly in withConfig module
+import withLogging from './with-logging'
+const addConfig = (config) => (o) =>
+  Object.assign({}, o, {
+    get(key) {
+      return config[key] == undefined
+        ? this.log(`Missing config key: ${key}`)
+        : config[key]
+    },
+  })
+
+const withConfig = ({ initialConfig, logger }) => (o) =>
+  pipe(
+    // compose explicit dependency here
+    withLogging(logger),
+    addConfig(initialConfig)
+  )(o)
+
+// the factory only needs to know about withConfig now
+const createConfig = ({ initialConfig, logger }) =>
+  withConfig({ initialConfig, logger })({})
+
+// elsewhere, in a different module
+const initialConfig = {
+  host: 'localhost',
+}
+
+const logger = console.log.bind(console)
+const config = createConfig({ initialConfig, logger })
+
+console.log(config.get('host')) // => 'localhost'
+
+config.get('notThere') // => 'Missing config key: notThere'
+```
+
+The correct choice depends on a lot of factors. It is valid to require a lifted data type for a functional mixin to act on, but if that’s the case, the API contract should be made explicitly clear in the function signature and API documentation.
+
+That’s the reason that the implicit version has a default value for `o` in the signature. Since JavaScript lacks type annotation capabilities, we can fake it by providing default values:
+
+```js
+const withConfig = config => (o = {
+  log: (text = '') => console.log(text)
+}) => Object.assign({}, o, {
+  // ...
+```
+
+If you’re using TypeScript or Flow, it’s probably better to declare an explicit interface for your object requirements.
+
+### Functional Mixins & Functional Programming
+
+“Functional” in the context of functional mixins does not always have the same purity connotations as “functional programming”. Functional mixins are commonly used in OOP style, complete with side-effects. Many functional mixins will alter the object argument you pass to them. Caveat emptor.
+By the same token, some developers prefer a functional programming style, and will not maintain an identity reference to the object you pass in. You should code your mixins and the code that uses them assuming a random mix of both styles.
+That means that if you need to return the object instance, always return this instead of a reference to the instance object in the closure -- in functional code, chances are those are not references to the same objects. Additionally, always assume that the object instance will be copied by assignment using `Object.assign()` or `{...object, ...spread}` syntax. That means that if you set non-enumerable properties, they will probably not work on the final object:
+
+```js
+const a = Object.defineProperty({}, 'a', {
+  enumerable: false,
+  value: 'a',
+})
+const b = {
+  b: 'b',
+}
+
+console.log({ ...a, ...b }) // => { b: 'b' }
+```
+
+By the same token, if you’re using functional mixins that you didn’t create in your functional code, don’t assume the code is pure. Assume that the base object may be mutated, and assume that there may be side-effects & no referential transparency guarantees, i.e., it is frequently unsafe to memoize factories composed of functional mixins.
 
 ### Credits
 
