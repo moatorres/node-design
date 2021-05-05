@@ -615,20 +615,20 @@ This is extremely readable.
 So in addition to `override`, or toolbox should include `before` and `after` method advice. `before` invokes the behaviour first, and if its return value is undefined or truthy, it invokes the decorated method:
 
 ```js
-let before = (behaviour, ...decoratedMethodNames) => (clazz) => {
+let before = (behaviour, ...methodNames) => (clazz) => {
   if (typeof behaviour === 'string') {
     behaviour = clazz.prototype[behaviour]
   }
 
-  for (let decoratedMethodName of decoratedMethodNames) {
-    let decoratedMethodFunction = clazz.prototype[decoratedMethodName]
+  for (let method of methodNames) {
+    let decoratedMethodFn = clazz.prototype[method]
 
-    Object.defineProperty(clazz.prototype, decoratedMethodName, {
+    Object.defineProperty(clazz.prototype, method, {
       value: function (...args) {
         let behaviourValue = behaviour.apply(this, ...args)
 
         if (behaviourValue === undefined || !!behaviourValue)
-          return decoratedMethodFunction.apply(this, args)
+          return decoratedMethodFn.apply(this, args)
       },
       writable: true,
     })
@@ -641,17 +641,17 @@ let before = (behaviour, ...decoratedMethodNames) => (clazz) => {
 `before` should be used to decorate methods with setup or validation behaviour. Its “partner” is `after`, a decorator that runs behaviour after the decorated method is invoked:
 
 ```js
-let after = (behaviour, ...decoratedMethodNames) => (clazz) => {
+let after = (behaviour, ...methodNames) => (clazz) => {
   if (typeof behaviour === 'string') {
     behaviour = clazz.prototype[behaviour]
   }
 
-  for (let decoratedMethodName of decoratedMethodNames) {
-    let decoratedMethodFunction = clazz.prototype[decoratedMethodName]
+  for (let method of methodNames) {
+    let decoratedMethodFn = clazz.prototype[method]
 
-    Object.defineProperty(clazz.prototype, decoratedMethodName, {
+    Object.defineProperty(clazz.prototype, method, {
       value: function (...args) {
-        let decoratedMethodValue = ecoratedMethodFunction.apply(this, args)
+        let decoratedMethodValue = decoratedMethodFn.apply(this, args)
 
         behaviour.apply(this, ...args)
         return decoratedMethodValue
