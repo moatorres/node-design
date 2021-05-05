@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Abstract Factory Pattern
+## Abstract Factory
 
 The **Abstract Factory Pattern** is a creational design pattern that can be used to _define specific instances or classes without having to specify the exact object that is being created_.
 

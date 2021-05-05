@@ -1,6 +1,6 @@
-# Functional Programming
+# Design Patterns
 
-## Adapter Pattern
+## Adapter Class
 
 The **Adapter Pattern** allows us to create bridges between two or more different interfaces. Common examples are `repositories` and `controllers`.
 
@@ -46,7 +46,7 @@ class LocalStorage {
 module.exports = new LocalStorage()
 ```
 
-We can then use our `adapter` as follows:
+We can then use our `LocalStorage` as follows:
 
 ```js
 const localStorage = require('./localStorage')

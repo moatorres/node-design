@@ -23,23 +23,21 @@ Let's see how to delegate responsibility to next function down the line.
 
 ```js
 const Discount = function () {
+  let numberDiscount = new NumberDiscount()
+  let priceDiscount = new PriceDiscount()
+  let noDiscount = new NoDiscount()
+  let subtotal = new Subtotal()
+
   this.calculate = (products) => {
-    // intanciar calculadoras de desconto
-    let numberDiscount = new NumberDiscount()
-    let priceDiscount = new PriceDiscount()
-    let none = new NoDiscount()
-
-    // add price discount to number discount
     numberDiscount.setNext(priceDiscount)
-
-    // add no discount to price discount
-    priceDiscount.setNext(none)
-
-    // execute and round to 2 dp
-    return numberDiscount.exec(products).toFixed(2)
+    priceDiscount.setNext(subtotal)
+    subtotal.setNext(noDiscount)
+    numberDiscount.exec(products).toFixed(2)
   }
 }
 ```
+
+`NumberDiscount`
 
 ```js
 const NumberDiscount = function () {
@@ -48,7 +46,7 @@ const NumberDiscount = function () {
     this.next = fn
   }
 
-  // execute by calculating own result and then append results by calling next
+  // calculate own result then append results by calling next
   this.exec = function (products) {
     let result = null
     if (products.length > 3) {
@@ -59,24 +57,28 @@ const NumberDiscount = function () {
 }
 ```
 
+`PriceDiscount`
+
 ```js
 const PriceDiscount = function () {
   this.next = null
   this.setNext = function (fn) {
     this.next = fn
   }
+
   this.exec = function (products) {
-    let total = products.reduce((el, tally) => {
-      return el + tally
-    }, 0)
     let result = null
-    if (total > 100) {
-      result = 0.2
-    }
-    return result + this.next.exec(products)
+    let reducer = (sum, item) => sum + item.price
+    let total = products.reduce(reducer, 0)
+
+    total > 100 && (result = 0.2)
+
+    return this.next.exec(result, total, products)
   }
 }
 ```
+
+`NoDiscount`
 
 ```js
 const NoDiscount = function () {
@@ -86,27 +88,39 @@ const NoDiscount = function () {
 }
 ```
 
-### Imperative method
+### Usage
+
+```js
+const list = new Products()
+list.addProduct({ name: 'iPhone 11', price: 799 })
+
+const discount = new Discount()
+discount.calculate(list.products)
+
+// => Subtotal: $799.00
+// => Bonus: 20%
+// => Discounted: $159.80
+// => Total: $639.20
+```
+
+#### Imperative Method Comparison
 
 Note the code here is not too bad but it does not scale as complexity grows.
 
 ```js
-const Discount = function () {
+let Discount = function () {
   this.calculate = function (products) {
     let numberDiscount = null
-    if (products.length > 3) {
-      numberDiscount = 0.1
-    }
-
     let priceDiscount = null
-    let total = products.reduce((el, tally) => {
-      return el + tally
-    }, 0)
-    if (total > 100) {
-      priceDiscount = 0.2
-    }
-
     let result = numberDiscount + priceDiscount
+
+    let total = products.reduce((elem, tally) => {
+      return elem + tally
+    }, 0)
+
+    products.length > 3 && numberDiscount = 0.1
+    total > 100 && priceDiscount = 0.2
+
     return result.toFixed(2)
   }
 }
@@ -115,4 +129,3 @@ const Discount = function () {
 ### Credits
 
 From this [repo](https://github.com/howardmann/node-design-patterns/blob/master/chain-of-resp/index.js) written by [@howardmann](https://github.com/howardmann)
-
