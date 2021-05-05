@@ -13,96 +13,93 @@ This logic is implemented in the different aggregates/entities/value objects/dom
 ```sh
 ├── projectName/
 |   ├── domain/
-|   |   ├── foo/
+|   |   ├── user/
 |   |   |   ├── behaviors.js
 |   |   |   ├── data.js
-|   |   |   ├── getFooOfId.js
-|   |   |   ├── saveFoo.js
+|   |   |   ├── createGetUserById.js
+|   |   |   ├── createSaveUser.js
 ```
 
-- the `projectName/domain/foo` module groups everything related to our “Foo” aggregate
-- the `projectName/domain/foo/data.js` file contains the factory function used to create an immutable “Foo” data structure :
+- the `projectName/domain/user` module groups everything related to our “Foo” aggregate
+- the `projectName/domain/user/data.js` file contains the factory function used to create an immutable `Foo` data structure:
 
 ```js
 // data.js
-const FooData = ({ id, foo, bar, foobaz }) =>
+const UserData = ({ id, user, role, powered }) =>
   Object.freeze({
     id,
-    foo,
-    bar,
-    foobaz,
+    user,
+    role,
+    powered,
   })
 
 module.exports = {
-  FooData,
+  UserData,
 }
 ```
 
-- the `projectName/domain/foo/behaviors.js` file contains the behaviors function acting on `FooData`. These are **pure functions** that take a `FooData` with some additional parameters needed to apply the behavior and return a new `FooData` immutable structure. Let’s say that our “Foo” aggregate has a really useful business rule stating that when the `bar` value is set then the `foobaz` value should be set to `42` if the `bar` value contains a “?”:
+- the `projectName/domain/user/behaviors.js` file contains the behaviors function acting on `UserData`.
+  >
+  - These are **pure functions** that take a `UserData` with some additional parameters needed to apply the behavior and return a new `UserData` immutable structure.
+
+Let’s say that our `Foo` aggregate has a really useful business rule stating that when the `role` value is set then the `powered` value should be set to `100` if the `role` value contains a “guest”:
 
 ```js
-// behaviors.js
-const { FooData } = require('./data')
+const { UserData } = require('./data')
 
-const updateBar = ({ fooData, bar }) => {
-  if (typeof bar !== typeof '') {
-    throw new Error('bar should be a valid string')
-  }
-  return FooData({
-    ...fooData,
-    bar,
-    foobaz: bar.indexOf('?') === -1 ? fooData.foobaz : 42,
+const updateRole = ({ userInfo, role }) => {
+  if (typeof role !== typeof '')
+    throw new Error('Role should be a valid string')
+
+  return UserData({
+    ...userInfo,
+    role,
+    powered: role.indexOf('guest') === -1 ? userInfo.powered : 100,
   })
 }
 
-module.exports = {
-  updateBar,
-}
+module.exports = { updateRole }
 ```
 
-<sup>A very useful behavior! In a real project, this function should be named according to the ubiquitous language, not with a “setter” logic</sup>
+On a real project, this function should be named according to the ubiquitous language, not with a “setter” logic.
 
-- the `projectName/domain/foo/getFooOfId.js` is the higher-order function that we must use to build a concrete getFooOfId implementation. We are in javascript so nothing really forces us to use this method but it acts as a documentation of the domain needs:
+- the `projectName/domain/user/createGetUserById.js` is the higher-order function that we must use to build a concrete `getUserById` implementation. We are in javascript so nothing really forces us to use this method but it acts as a documentation of the domain needs:
 
 ```js
-// getFoodOfId.js
-const { FooData } = require('./data')
+// createGetUserById.js
+const { UserData } = require('./data')
 
-const getFooOfId = (
-  getFooOfIdImpl = async (fooId) => {
+const createGetUserById = (
+  getUserByIdImpl = async (userId) => {
     throw new Error(
-      `Can't retrieved foo of id ${fooId} : missing implementation`
+      `Can't retrieved user of id ${userId} : missing implementation`
     )
   }
-) => async (fooId) => {
+) => async (userId) => {
   try {
-    const fooData = await getFooOfIdImpl(fooId)
-    return FooData(fooData)
+    const userInfo = await getUserByIdImpl(userId)
+    return UserData(userInfo)
   } catch (err) {
-    throw new Error(`Unable to retrieve Foo with id ${fooId}`)
+    throw new Error(`Unable to retrieve Foo with id ${userId}`)
   }
 }
 
-module.exports = {
-  getFooOdId,
-}
+module.exports = { getUserById }
 ```
 
 This function is used to build a concrete implementation, for example with an in-memory database:
 
 ```js
-const inMemoryFooDatabase = {
-  foo17: {
-    id: 'foo17',
-    foo: 'a foo value',
-    bar: 'a bar value',
-    foobaz: 1234,
+const inMemoryDb = {
+  user17: {
+    id: 'user17',
+    name: 'jonas',
+    role: 'admin',
+    powered: 1234,
   },
 }
 
-const getFooOfIdFromInMemoryDatabase = getFooOfId(
-  (fooId) => inMemoryFooDatabase[fooId]
-)
+const getUserByIdFromMemory = getUserById((userId) => inMemoryDb[userId])
 ```
 
 ### The Application layer
@@ -112,23 +109,23 @@ The application layer depends on the domain layer and has its infrastructural de
 The code might look like this:
 
 ```js
-// updateBarUseCaseHandler.js
-const { updateBar } = require('../domain/foo/behaviors')
+// updateRoleHandler.js
+const { updateRole } = require('../domain/user/behaviors')
 
-const updateBarUseCaseHandler = ({ getFooOfId, saveFoo }) => async ({
-  fooId,
-  bar,
+const updateRoleHandler = ({ getUserById, saveUser }) => async ({
+  userId,
+  role,
 }) => {
-  if (typeof fooId !== typeof '') {
-    throw new Error('fooId must be string')
+  if (typeof userId !== typeof '') {
+    throw new Error('userId must be string')
   }
-  const fooData = getFooOfId()
-  const newFooData = updateBar({ fooData, bar })
-  await saveFoo(newFooData)
+  const userInfo = getUserById()
+  const newUserData = updateRole({ userInfo, role })
+  await saveUser(newUserData)
 }
 
 module.exports = {
-  updateBarUseCaseHandler,
+  updateRoleHandler,
 }
 ```
 
@@ -137,33 +134,35 @@ The folders structure is now :
 ```sh
 ├── projectName/
 | ├── domain/
-| | ├── foo/
+| | ├── user/
 | | | ├── behaviors.js
 | | | ├── data.js
-| | | ├── getFooOfId.js
-| | | ├── saveFoo.js
+| | | ├── createGetUserById.js
+| | | ├── createSaveUser.js
 | ├── application/
-| | ├── updateBarUseCaseHandler.js
+| | ├── updateRoleHandler.js
 ```
 
 ### The infrastructure layer
 
-As we can see in the above code, our updateBarUseCaseHandler is a higher-order function accepting a getFooOfI function and asaveFoo function as dependencies. These functions will be injected at runtime, be we need to create them in the first place! Let’s implement them as functions acting on an in-memory database for the sake of this example, based on the functions defined in the domain layer:
+As we can see in the above code, our `updateRoleHandler` is a higher-order function accepting a `getFooById` function and a `saveUser` function as dependencies. These functions will be injected at runtime, but we need to create them in the first place.
+
+Let’s implement them as functions acting on an in-memory database for the sake of this example, based on the functions defined in the domain layer:
 
 ```js
-// inMemoryDatabase.js
-const { getFooOfId: createGetFooOfId } = require('../domain/foo/getFooOfId')
-const { saveFoo: createSaveFoo } = require('../domain/foo/saveFoo')
+// inMemoryDb.js
+const { createGetUserById } = require('../domain/user/createGetUserById')
+const { createSaveUser } = require('../domain/user/createSaveUser')
 
-const getFooOfId = (inMemoryDatabase) =>
-  createGetFooOfId((fooId) => inMemoryDatabase[fooId])
+const getUserById = (inMemoryDb) =>
+  createGetUserById((userId) => inMemoryDb[userId])
 
-const saveFoo = (inMemoryDatabase) =>
-  createSaveFoo((fooState) => (inMemoryDatabase[fooState.id] = fooState))
+const saveUser = (inMemoryDb) =>
+  createSaveUser((userState) => (inMemoryDb[userState.id] = userState))
 
 module.exports = {
-  getFooOfId,
-  saveFoo,
+  getUserById,
+  saveUser,
 }
 ```
 
@@ -172,31 +171,31 @@ The folders structure is now the following:
 ```sh
 ├── projectName/
 | ├── domain/
-| | ├── foo/
+| | ├── user/
 | | | ├── behaviors.js
 | | | ├── data.js
-| | | ├── getFooOfId.js
-| | | ├── saveFoo.js
+| | | ├── createGetUserById.js
+| | | ├── createSaveUser.js
 | ├── application/
-| | ├── updateBarUseCaseHandler.js
+| | ├── updateRoleHandler.js
 | ├── infrastructure /
 | | ├── inMemory.js
 ```
 
 ### The Composition Root
 
-To tie it all together and inject the correct dependencies at runtime, we need a way to “instantiate” our whole project with the given dependencies. This is what we called a composition root. We need to compose those objects together as close as possible to the application’s entry point. Here, our application is not very useful and has only one use case, by “instantiating” our project I mean having the possibility to send commands to it, let’s expose a `MyVeryUsefulProject` function that will do that, in a `index.js` file for example:
+To tie it all together and inject the correct dependencies at runtime, we need a way to “instantiate” our whole project with the given dependencies. This is what we called a composition root. We need to compose those objects together as close as possible to the application’s entry point. Here, our application is not very useful and has only one use case, by “instantiating” our project I mean having the possibility to send commands to it, let’s expose a `UserDomainProject` function that will do that, in a `index.js` file for example:
 
 ```sh
 ├── projectName/
 | ├── domain/
-| | ├── foo/
+| | ├── user/
 | | | ├── behaviors.js
 | | | ├── data.js
-| | | ├── getFooOfId.js
-| | | ├── saveFoo.js
+| | | ├── createGetUserById.js
+| | | ├── createSaveUser.js
 | ├── application/
-| | ├── updateBarUseCaseHandler.js
+| | ├── updateRoleHandler.js
 | ├── infrastructure /
 | | ├── inMemory.js
 ├── index.js
@@ -204,20 +203,16 @@ To tie it all together and inject the correct dependencies at runtime, we need a
 
 ```js
 // index,js
-const {
-  updateBarUseCaseHandler,
-} = require('./application/updateBarUseCaseHandler')
+const { updateRoleHandler } = require('./application/updateRoleHandler')
 
-const MyVeryUsefulProject = ({ getFooOfId, saveFoo }) => ({
-  updateBar: updateBarUseCaseHandler({ getFooOfId, saveFoo }),
+const UserDomainProject = ({ getUserById, saveUser }) => ({
+  updateRole: updateRoleHandler({ getUserById, saveUser }),
 })
 
-module.exports = {
-  MyVeryUsefulProject,
-}
+module.exports = { UserDomainProject }
 ```
 
-It’s a very very contrived example, but we can now write a unit test asserting that the foo object was correctly saved by using our `inMemory` functions in the `projectName/__tests__/updatingBar.test.js` file
+It’s a very very contrived example, but we can now write a unit test asserting that the user object was correctly saved by using our `inMemory` functions in `projectName/__tests__/updatingUser.test.js`
 
 ### Credits
 
