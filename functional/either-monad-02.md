@@ -81,4 +81,4 @@ Either.pure = new Left(null).pure
 
 ### Credits
 
-From the article [](https://www.toptal.com/javascript/option-maybe-either-future-monads-js) writen by [@alleycat-at-git](https://github.com/alleycat-at-git)
+From the article [Option/Maybe, Either, and Future Monads in JavaScript, Python, Ruby, Swift, and Scala](https://www.toptal.com/javascript/option-maybe-either-future-monads-js) written by [@alleycat-at-git](https://github.com/alleycat-at-git)

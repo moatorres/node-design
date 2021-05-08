@@ -25,12 +25,16 @@ function makeGuard() {
   }
 
   const againstNullOrUndefinedBulk = (args) => {
+    let bulk = []
     for (let arg of args) {
       const result = againstNullOrUndefined(arg.value, arg.key)
-      if (!result.success) return result
+
+      if (!result.success) bulk.push(result)
+      // if (!result.success) return result
     }
 
-    return success
+    return bulk
+    // return success
   }
 
   const isOneOf = (value, validValues, key) => {
@@ -99,8 +103,8 @@ function makeGuard() {
 const Guard = makeGuard()
 
 const props = {
-  firstName: 'Moka',
-  lastName: 'Floca',
+  firstName: '',
+  lastName: '',
   email: 'moka@moka.com',
   isEmailVerified: false,
   age: 10,
@@ -126,16 +130,18 @@ const guardedProps = [
 ]
 
 const teste = Guard.againstNullOrUndefinedBulk(guardedProps)
+// const arr = Guard.combine(teste)
 console.log(teste) // => { success: true }
+// console.log(arr) // => { success: true }
 
-const testa = Guard.againstNullOrUndefined(props.lastName, 'lastName')
-console.log(testa) // => { success: true }
+// const testa = Guard.againstNullOrUndefined(props.lastName, 'lastName')
+// console.log(testa) // => { success: true }
 
-const taste = Guard.isOneOf(props.email, ['moka@moka.com', 'jabuti'], 'email')
-console.log(taste) // => { success: true }
+// const taste = Guard.isOneOf(props.email, ['moka@moka.com', 'jabuti'], 'email')
+// console.log(taste) // => { success: true }
 
-const toast = Guard.inRange(props.age, 4, 10, 'age')
-console.log(toast) // => { success: true }
+// const toast = Guard.inRange(props.age, 4, 10, 'age')
+// console.log(toast) // => { success: true }
 
-const tosta = Guard.allInRange([5, 6, 7], 4, 10, 'age')
-console.log(tosta) // => { success: true }
+// const tosta = Guard.allInRange([5, 6, 7], 4, 10, 'age')
+// console.log(tosta) // => { success: true }
