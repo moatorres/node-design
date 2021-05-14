@@ -7,7 +7,7 @@
   <h3 align="center">Node Design Patterns</h3>
 
   <p align="center">
-    Curated collection of gists, articles and snippets about JavaScript and TypeScript
+    Collection of gists, articles and snippets about JavaScript and TypeScript
     <br />
     <a href="https://github.com/moatorres/node-design-patterns"><strong>Explore the repo »</strong></a>
     <br />
@@ -37,4 +37,4 @@
 
 Distributed under an [MIT]() license
 
-[design-patterns]:()
+[design-patterns]: ()
