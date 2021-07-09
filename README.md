@@ -1,4 +1,4 @@
-# Node Design Patterns
+# ⚡️ Node Design Patterns
 
 #### JavaScript and TypeScript snippets for self-learners
 
