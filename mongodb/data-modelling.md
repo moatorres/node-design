@@ -2,106 +2,102 @@
 
 ## Data Modelling
 
-<summary></sumary>
-
 ### `many-to-one`
 
-##### Exemplo A
-
-- Inserir `_id` explicitamente pra dar coerência ao exemplo
+<sub>Inserting `_id` explicitly for the sake of this example only</sub>
 
 ```js
-db.funcionarios.insert({
+db.staff.insert({
   _id: ObjectId('4d85c7039ab0fd70a117d730'),
-  nome: 'Léo',
+  name: 'Leo',
 })
 ```
 
-- Adicionar novos `funcionarios` gerenciados por `'Léo'`
+Add `staff` managed by `Leo`
 
 ```js
-db.funcionarios.insert({
+db.staff.insert({
   _id: ObjectId('4d85c7039ab0fd70a117d731'),
-  nome: 'Pedro',
-  gerente: ObjectId('4d85c7039ab0fd70a117d730'),
+  name: 'Peter',
+  manager: ObjectId('4d85c7039ab0fd70a117d730'),
 })
 
-db.funcionarios.insert({
+db.staff.insert({
   _id: ObjectId('4d85c7039ab0fd70a117d732'),
-  nome: 'João',
-  gerente: ObjectId('4d85c7039ab0fd70a117d730'),
+  name: 'John',
+  manager: ObjectId('4d85c7039ab0fd70a117d730'),
 })
 ```
 
-- Retornar os funcionários de `'Léo'`
+Get `staff` managed by `Leo`
 
 ```js
-db.funcionarios.find({ gerente: ObjectId('4d85c7039ab0fd70a117d730') })
+db.staff.find({ manager: ObjectId('4d85c7039ab0fd70a117d730') })
 ```
 
-### `many-to-many` relationships
+### `many-to-many`
 
-- **Arrays** `[]`
+**Arrays** `[]`
 
 ```js
-db.funcionarios.insert({
+db.staff.insert({
   _id: ObjectId('4d85c7039ab0fd70a117d733'),
-  nome: 'Siona',
-  gerente: [
+  name: 'Siona',
+  manager: [
     ObjectId('4d85c7039ab0fd70a117d730'),
     ObjectId('4d85c7039ab0fd70a117d732'),
   ],
 })
 ```
 
-- **Nested documents\*** `{ prop: { info: '' } }`
+**Nested documents** `{ prop: { info: '' } }`
 
 ```js
-db.funcionarios.insert({
+db.staff.insert({
   _id: ObjectId('4d85c7039ab0fd70a117d734'),
-  nome: 'Juliana',
-  filiacao: {
-    mae: 'Maria',
-    pai: 'Paulo',
-    irmão: ObjectId('4d85c7039ab0fd70a117d730'),
+  name: 'Juliana',
+  parentage: {
+    mother: 'Maria',
+    father: 'Paulo',
+    brother: ObjectId('4d85c7039ab0fd70a117d730'),
   },
 })
 ```
 
-<sup>**\*Nested documents can be queried using dot-notation:** `db.funcionarios.find({ 'filiacao.mae': 'Maria' })`</sup>
+<sup>Query nested docs using dot-notation: `db.staff.find({ 'parentage.mother': 'Maria' })`</sup>
 
-- **Arrays of documents** `[{}, {}, { prop: { info: '' } }]`
+**Arrays of documents** `[{}, {}, { prop: { info: '' } }]`
 
 ```js
-db.funcionarios.insert({
+db.staff.insert({
   _id: ObjectId('4d85c7039ab0fd70a117d735'),
-  nome: 'Maria',
-  filiacao: [
-    { parentesco: 'mae', nome: 'Maria' },
-    { parentesco: 'pai', nome: 'Paulo' },
-    { parentesco: 'irmão', nome: 'Douglas' },
+  name: 'Maria',
+  parentage: [
+    { kinship: 'mother', name: 'Maria' },
+    { kinship: 'father', name: 'Paulo' },
+    { kinship: 'brother', name: 'Douglas' },
   ],
 })
 ```
 
-<sup>**\*Nested documents** or nested `objects` can have as many properties as needed:</sup>
+<sup>Nested docs or `objects` can have as many properties as needed:</sup>
 
 ```js
-db.pessoas.insert({
-  nome: 'leto',
+db.persons.insert({
+  name: 'leto',
   email: 'leto@dune.gov',
-  enderecos: [
+  addresses: [
     {
-      logradouro: 'Av. General San Martin. 345',
-      cidade: 'Rio de Janeiro',
-      estado: 'RJ',
-      cep: '10036-010',
+      street: 'Av. Atlântica, 345',
+      city: 'Rio de Janeiro',
+      state: 'RJ',
+      zipcode: '10036-010',
     },
     {
-      logradouro: '555 University',
-      cidade: 'Palo Alto',
-      estado: 'CA',
-      cep: '94107',
+      street: '555 University',
+      city: 'Palo Alto',
+      state: 'CA',
+      zipcode: '94107',
     },
   ],
 })

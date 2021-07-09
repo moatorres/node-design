@@ -138,7 +138,7 @@ for (let property in urgent) console.log(property)
 // getColourRGB
 ```
 
-As we can see, the `setColourRGB` and `getColourRGB` methods are enumerated, although the do and undo methods are not. This can be a problem with naïve code: we can’t always rewrite all the other code to carefully use `.hasOwnProperty`.
+As we can see, the `setColourRGB` and `getColourRGB` methods are enumerated, although the `do` and `undo` methods are not. This can be a problem with naïve code: we can’t always rewrite all the other code to carefully use `.hasOwnProperty`.
 
 One benefit of functional mixins is that we can solve this problem and transparently make mixins behave like `class`:
 

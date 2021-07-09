@@ -1,38 +1,18 @@
-<br />
-<p align="center">
-  <h1 align="center">Node Design Patterns</h1>
+# Node Design Patterns
 
-  <p align="center">
-    Collection of gists, articles and snippets about JavaScript and TypeScript
-    <br />
-    <a href="https://github.com/moatorres/node-design-patterns"><strong>Explore the repo »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/moatorres/node-design-patterns/issues">Report a Bug</a>
-    ·
-    <a href="https://github.com/moatorres/node-design-patterns/issues">Request Feature</a>
-  </p>
-</p>
+#### JavaScript and TypeScript snippets for self-learners
 
-For the past three of years I've been learning JavaScript and TypeScript, trying to find patterns, good advice, best practices and overall knowledge about those two languanges. This repo is a compilation of some of the articles, excerpts and other public sources I've found a long the way.
+This repo is a collection of articles, repositories, gists and snippets I've found useful in the journey of learning Node.js
 
-I've done my best to credit the authors. If you think I may have violated anyone's rights, please let me know and I'll immediately remove the content or amend as you may see fit.
+#### Summary
 
-<details open="open">
-  <summary><h3 style="display: inline-block">Summary</h3></summary>
-  <ol>
-    <li>
-      <a href="#design-patterns">Design Patterns</a>
-    </li>
-    <li>
-      <a href="#functional-programming">Functional Programming</a>
-    </li>
-    <li><a href="#clean-architecture">Clean Architecture</a></li>
-    <li><a href="#mongodb">MongoDB</a></li>
-    <li><a href="#contributing">Utilities</a></li>
-  </ol>
-</details>
+- [Clean Architecture](https://github.com/moatorres/node-design-patterns/tree/master/clean-architecture)
+- [Design Patterns](https://github.com/moatorres/node-design-patterns/tree/master/design-patterns)
+- [Monads](https://github.com/moatorres/node-design-patterns/tree/master/monads)
+- [MongoDB](https://github.com/moatorres/node-design-patterns/tree/master/mongodb)
+- [React](https://github.com/moatorres/node-design-patterns/tree/master/react)
+- [Utilities](https://github.com/moatorres/node-design-patterns/tree/master/utilities)
 
-### License
+#### Credits
 
-Distributed under an [MIT]() license
+[@addyosmani](https://github.com/addyosmani) [@alexjoverm](https://github.com/alexjoverm/) [@alleycat-at-git](https://github.com/alleycat-at-git) [@angus-c](https://github.com/angus-c) [@caballerog](https://github.com/Caballerog) [@cherihung](https://github.com/cherihung) [@dan-nix](https://github.com/dan-nix) [@diegomais](https://github.com/diegomais) [@ericelliott](https://github.com/ericelliott) [@howardmann](https://github.com/howardmann) [@janbodnar](https://github.com/janbodnar) [@jesterxl](https://github.com/JesterXL) [@jlyman](https://github.com/jlyman) [@jogilvyt](https://github.com/jogilvyt) [@joshuahall](https://github.com/JoshuaHall) [@jrsinclair](https://github.com/jrsinclair) [@mahdhir](https://github.com/Mahdhir) [@maiavictor](https://github.com/MaiaVictor/) [@marconicolodi](https://github.com/MarcoNicolodi) [@marijnh](https://github.com/marijnh) [@martinnowak](https://github.com/MartinNowak) [@maturc](https://github.com/maturc) [@nphyx](https://github.com/nphyx) [@otomakan](https://github.com/Otomakan) [@pauloafpjunior](https://github.com/pauloafpjunior/) [@pcreations](https://github.com/PCreations) [@r3dm1ke](https://github.com/r3dm1ke) [@raganwald](https://github.com/raganwald) [@rauschma](https://github.com/rauschma) [@rgeraldporter](https://github.com/rgeraldporter) [@ryandabler](https://github.com/ryandabler) [@sebmarkbage](https://gist.github.com/sebmarkbage) [@simonschwartz](https://github.com/simonschwartz) [@stemmlerjs](https://github.com/stemmlerjs) [@swyx](https://www.netlify.com/authors/swyx/)

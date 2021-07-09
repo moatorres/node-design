@@ -26,19 +26,25 @@ function ObserverList() {
   this.observerList = []
 }
 
-ObserverList.prototype.add = (obj) => this.observerList.push(obj)
+ObserverList.prototype.add = function (obj) {
+  this.observerList.push(obj)
+}
 
-ObserverList.prototype.count = () => this.observerList.length
+ObserverList.prototype.count = function () {
+  this.observerList.length
+}
 
-ObserverList.prototype.removeAt = (index) => this.observerList.splice(index, 1)
+ObserverList.prototype.removeAt = function (index) {
+  this.observerList.splice(index, 1)
+}
 
-ObserverList.prototype.get = (index) => {
+ObserverList.prototype.get = function (index) {
   if (index > -1 && index < this.observerList.length) {
     return this.observerList[index]
   }
 }
 
-ObserverList.prototype.indexOf = (obj, startIndex) => {
+ObserverList.prototype.indexOf = function (obj, startIndex) {
   var i = startIndex
 
   while (i < this.observerList.length) {
@@ -55,13 +61,17 @@ ObserverList.prototype.indexOf = (obj, startIndex) => {
 Next, let's model the `Subject` and the ability to `add`, `remove` or `notify` observers on the observer list.
 
 ```js
-const Subject = () => (this.observers = new ObserverList())
+const Subject = function () {
+  this.observers = new ObserverList()
+}
 
-Subject.prototype.addObserver = (observer) => this.observers.add(observer)
+Subject.prototype.addObserver = function (observer) {
+  this.observers.add(observer)
+}
 
-Subject.prototype.removeObserver = (observer) =>
+Subject.prototype.removeObserver = function (observer) {
   this.observers.removeAt(this.observers.indexOf(observer, 0))
-
+}
 Subject.prototype.notify = function (context) {
   let observerCount = this.observers.count()
   for (let i = 0; i < observerCount; i++) {
@@ -127,7 +137,9 @@ function addNewObserver() {
   extend(check, new Observer())
 
   // override with custom update behaviour
-  check.update = (value) => (this.checked = value)
+  check.update = function (value) {
+    this.checked = value
+  }
 
   // add the new observer to our list of observers
   controlCheckbox.addObserver(check)

@@ -1,79 +1,69 @@
-# MongoDB Indexes
-
-## Summary
-
-| Command       | Description                   |
-| ------------- | :---------------------------- |
-| `getIndexes`  | Listar indexes de uma coleção |
-| `dropIndex`   | Remover index existente       |
-| `ensureIndex` | Criar um novo index           |
+# MongoDB Index API
 
 ### `getIndexes`
 
 ```js
-db.pessoas.getIndexes()
+db.persons.getIndexes()
 ```
 
 ### `dropIndex`
 
 ```js
-db.pessoas.dropIndex({ cpf: 1 })
+db.persons.dropIndex({ age: 1 })
 ```
 
 ### `ensureIndex`
 
-- **`field`**
-
-  ```js
-  db.pessoas.ensureIndex({ nome: 1 })
-  ```
-
-- **`compound`**
-
-  ```js
-  db.pessoas.ensureIndex({ nome: 1, cpf: -1 })
-  ```
-
-- **`multi-key`**
-
-  ```js
-  db.pessoas.ensureIndex({ nome: 1, 'filiacao.mae': -1 })
-  ```
-
-- **`unique`**
-
-  ```js
-  db.pessoas.ensureIndex({ cpf: 1 }, { unique: true })
-  ```
-
-- **`text`**
-
-  ```js
-  db.postagens.createIndex({ comentarios: 'text' })
-  ```
-
-**Others**
-
-- **`multi-key unique`**
+`field`
 
 ```js
-db.pessoas.ensureIndex({ cpf: 1, 'endereco.cep': 1 }, { unique: true })
+db.persons.ensureIndex({ name: 1 })
 ```
 
-- **`multi-key text`**
+`compound`
 
 ```js
-db.postagens.createIndex({
+db.persons.ensureIndex({ name: 1, age: -1 })
+```
+
+`multi-key`
+
+```js
+db.persons.ensureIndex({ name: 1, 'filiacao.mae': -1 })
+```
+
+`unique`
+
+```js
+db.persons.ensureIndex({ age: 1 }, { unique: true })
+```
+
+`text`
+
+```js
+db.posts.createIndex({ comments: 'text' })
+```
+
+`multi-key unique`
+
+```js
+db.persons.ensureIndex({ age: 1, 'address.zipcode': 1 }, { unique: true })
+```
+
+`multi-key text`
+
+```js
+db.posts.createIndex({
   titulo: 'text',
   descricao: 'text',
 })
 ```
 
-- **`unique partial`**
+`unique partial`
 
 ```js
-db.pessoas.createIndex(
-  { nome: 1 },
+db.persons.createIndex(
+  { name: 1 },
   { unique: true, partialFilterExpression: { peso: { $gte: 21 } } }
 )
 ```
@@ -81,9 +71,9 @@ db.pessoas.createIndex(
 ###### To see whether or not your queries are using an index, you can use the explain method on a cursor:
 
 ```js
-db.pessoas.find().explain()
+db.persons.find().explain()
 ```
 
 ```js
-db.pessoas.find({ nome: 'Foni' }).explain()
+db.persons.find({ name: 'John' }).explain()
 ```
