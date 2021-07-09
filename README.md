@@ -7,10 +7,6 @@
   </h4>
 </p>
 
-####
-
-This repo is a collection of articles, repositories, gists and snippets I've found useful in the journey of learning Node.js
-
 #### Summary
 
 - [Clean Architecture](https://github.com/moatorres/node-design-patterns/tree/master/clean-architecture)
