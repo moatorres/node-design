@@ -1,6 +1,13 @@
-# ⚡️ Node Design Patterns
+<br />
+<p align="center">
+  <h1 align="center">⚡️ Node Design Patterns</h1>
+  <h4 align="center">
+    JavaScript and TypeScript snippets for self-learners
+    <br />
+  </h4>
+</p>
 
-#### JavaScript and TypeScript snippets for self-learners
+####
 
 This repo is a collection of articles, repositories, gists and snippets I've found useful in the journey of learning Node.js
 
