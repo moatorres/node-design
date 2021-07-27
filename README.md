@@ -1,10 +1,10 @@
-### Node Design Patterns
-
-### JavaScript for self-learners
+# Node Design Patterns
 
 This repo is a collection of articles, snippets, and tips that helped me to learn and better understand [Node.js](https://nodejs.org/en/) and its tricks.
 
-#### Summary
+### JavaScript for self-learners
+
+### Summary
 
 Files are split in [`general`](https://github.com/moatorres/node-design/tree/master/general), [`monads`](https://github.com/moatorres/node-design/tree/master/monads) and [`patterns`](https://github.com/moatorres/node-design/tree/master/patterns)
 
@@ -12,7 +12,7 @@ Files are split in [`general`](https://github.com/moatorres/node-design/tree/mas
 - [`monads`](https://github.com/moatorres/node-design/tree/master/monads) → articles about monads and functional programming
 - [`patterns`](https://github.com/moatorres/node-design/tree/master/patterns) → design patterns with working examples and implementations
 
-#### Credits
+### Credits
 
 - [@addyosmani](https://github.com/addyosmani)
 - [@alexjoverm](https://github.com/alexjoverm/)
