@@ -1,4 +1,4 @@
-## Node Design Patterns
+## Node Design Patterns
 
 #### Server-side JavaScript for self-learners
 
@@ -10,7 +10,7 @@ Files are split in [`general`](https://github.com/moatorres/node-design/tree/mas
 
 - [`general`](https://github.com/moatorres/node-design/tree/master/general) → snippets, methods and native functionality examples
 - [`monads`](https://github.com/moatorres/node-design/tree/master/monads) → articles about monads and functional programming
-- [`patterns`](https://github.com/moatorres/node-design/tree/master/patterns) → articles and working implementations of design patterns
+- [`patterns`](https://github.com/moatorres/node-design/tree/master/patterns) → design patterns with working examples and implementations
 
 ##### Credits
 
