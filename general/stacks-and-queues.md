@@ -6,7 +6,7 @@ Stacks and queues are opposite methods of treating incoming data, particularly w
 
 ### Stacks
 
-Stacks are considered a LIFO structure, meaning last in first out. We add items to our stack and if some other condition is met, like a timer ran out or a task was completed, the most recently added item is the first to be removed and is the only one that we can interact with. I like to visualize this as washing and drying a stack of plates, as you add to the top of the stack you are restricted to only working with the topmost plate before you have access to the rest.
+Stacks are considered a **LIFO** structure, meaning **last in first out**. We add items to our stack and if some other condition is met, like a timer ran out or a task was completed, the most recently added item is the first to be removed and is the only one that we can interact with. I like to visualize this as washing and drying a stack of plates, as you add to the top of the stack you are restricted to only working with the topmost plate before you have access to the rest.
 
 You’ve already been using stacks a lot, like with the recursion call stack or the standard JavaScript call stack when you make asynchronous requests. The need to strictly control the order of operations in this way is extremely common and will even help us in some less intuitive ways like traversing trees and ranking search results.
 
