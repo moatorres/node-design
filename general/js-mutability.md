@@ -2,18 +2,14 @@
 
 ## JavaScript Mutability
 
-When I first dived into JavaScript and programming; I never really thought about immutable data. I would say animal is panda, then animal is lion.
+In the beggining JavaScript's `var` really didn't cared about immutable data.
 
 ```js
 var animal = 'panda'
 animal = 'lion'
 ```
 
-I was free to do whatever I wanted with my data! But… things changed… I grew up. People started telling me: “you should always use const if you can”. So I obediently did. But I didn’t really understand why.
-
 ### Why Use Immutable Data
-
-Because sometimes code changes things you don’t want to be changed. That’s a very lame answer I know, let me show you with an example.
 
 Let’s say we have an e-commerce site.
 
@@ -36,11 +32,11 @@ const checkout = (user, cart) => {
 }
 ```
 
-Let’s say we got our address-validator by installing an npm package.
+Let’s say we got our address-validator by installing an `npm` package.
 
 `$ npm install address-validator`
 
-Everything works as expected but one day a new version is released a new line of code was introduced to the package which looks like this:
+Everything works as expected but one day a new version is released, and a new line of code is introduced to the package:
 
 ```js
 // Module: validateAddress.js
@@ -50,11 +46,11 @@ const validateAddress = (address) => {
 }
 ```
 
-Now the variable userAddress will always be equal to the value of address! You can see how this is a problem.
+Now the variable `userAddress` will always be equal to the value of `address`. 
 
-This specific issue can be solved by using immutability. But it can also be solved with proper scoping. Try to figure out how!
+Of course, malicious code is an edge case.  This specific issue can be solved by using immutability. But it can also be solved with proper scoping.
 
-Of course, malicious code is an edge case. But there are many ways in which immutable data can help you write better code. For example, a very common mistake is to accidentally mutate the property of an object.
+There are many ways in which immutable data can help you write better code. For example, a very common mistake is to accidentally mutate the property of an object.
 
 ```js
 // Module: accidental-change.js
@@ -67,11 +63,9 @@ user2.name = 'Bob'
 // userJack.name === 'bob'
 ```
 
-This type of mistake can occur very often.
-
 ### Immutability Tools
 
-The most intuitive immutability tool is to use const.
+The most intuitive immutability tool is to use `const`.
 
 ```js
 const animal = 'panda'
@@ -80,7 +74,7 @@ const animal = 'panda'
 panda = 'lion'
 ```
 
-`const` is great. However, it sometimes only gives the illusion of immutability!
+However, `const` sometimes only gives the illusion of immutability.
 
 ```js
 // Module: example-checkout.js
@@ -101,7 +95,7 @@ const validAddress = maliciousAddressValidator(user)
 
 There are different ways to solve this problem and introducing immutability is one of them.
 
-First we can use the `Object.freeze` method.
+First, we can use the `Object.freeze` method.
 
 ```js
 const user = {
@@ -113,7 +107,7 @@ const validAddress = maliciousAddressValidator(user)
 // Now user.address === '233 Paradise Road' !!
 ```
 
-One issue with `Object`.freeze is that you don’t affect sub-properties. To reach all sub-properties you can write something like:
+One issue with `Object.freeze` is that you don’t affect sub-properties. To reach all sub-properties you can write something like:
 
 ```js
 const superFreeze = (obj) => {
@@ -128,7 +122,7 @@ Another solution is to use proxies if you need flexibility.
 
 ### Using Property Descriptors
 
-In many sites, you will see that you can modify property descriptors to create immutable properties. And that’s true, but you have to make sure that configurable and writeable are set to false.
+You can modify property descriptors to create immutable properties, but you make sure that configurable and writeable are set to false.
 
 ```js
 // Setting up a normal getter
@@ -194,7 +188,7 @@ arr[0] = 10
 // arr === [ 10, 'b', 'c' ]
 ```
 
-Well you can use the same tools we used above.
+You can use the same tools we used above.
 
 ```js
 Object.freeze(arr)
@@ -218,11 +212,6 @@ zoo[0] = 'alligator'
 // The value of zoo[0] hasn't changed
 // zoo[0] === 'panda
 ```
-
-### Other Methods
-There are other tricks to keep your data safe. I highly recommend checking out our article about Proxy Traps to find out other ways to make your data immutable. We only scratched the surface here.
-
-In this post, we explored options to introduce immutability without changing the structure and style of our code. In future posts, we will explore libraries such as Immutable.js, Immer or Ramda to right immutable code.
 
 ### Credits
 
